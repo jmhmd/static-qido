@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Static QIDO</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Send QIDO request</h1>
+      <form id="query-form">
+        QIDO/<input
+          type="text"
+          id="qido-input"
+          style="width: 50%"
+          placeholder="studies?includefield=all"
+          value="studies?includefield=all"
+        />
+        <button type="submit">Send query</button>
+      </form>
+      <pre id="results"></pre>
+    </div>
+    <script type="module" src="/index.js"></script>
+  </body>
+</html>
