@@ -1,8 +1,3 @@
-const regexes = {
-  studyLevelReq: /(?:\/studies|^studies)(?:\?|$)/,
-  seriesLevelReq: /(?:\/studies|^studies)\/.+\/series(?:\?|$)/,
-};
-
 /** @type {{[key: string]: string}} */
 const columnMap = {
   StudyInstanceUID: 'study_instance_uid',
@@ -154,17 +149,10 @@ function parseIncludeFields(sqlSelectColumns, value) {
 
 /**
  * Parse a URL fragment to return an SQL query
- * @param {string} urlFragment Either a complete URL or fragment to parse
+ * @param {URL} url window.URL object
  * @returns {{statement: string; params: (string | number)[];}}
  */
-export default function qidoToSQL(urlFragment) {
-  const url = new URL(urlFragment, window.location.origin);
-  const isStudyLevelReq = regexes.studyLevelReq.test(url.pathname);
-  const isSeriesLevelReq = regexes.seriesLevelReq.test(url.pathname);
-  if (!isStudyLevelReq && !isSeriesLevelReq) {
-    throw new Error('Only study and series level qido requests are supported');
-  }
-
+export default function qidoToSQL(url) {
   const sqlTable = 'studies';
   /** @type {string[]} */
   let sqlSelectColumns = [];
@@ -181,21 +169,19 @@ export default function qidoToSQL(urlFragment) {
   // Define fuzzymatching before looping through params as this value affects how others parsed.
   const fuzzyMatching = searchParams.get('fuzzymatching') === 'true';
 
-  if (isStudyLevelReq) {
-    searchParams.forEach((value, key) => {
-      if (key === 'includefield') {
-        sqlSelectColumns = parseIncludeFields(sqlSelectColumns, value);
-      } else if (key === 'fuzzymatching') {
-        return true;
-      } else if (key === 'limit') {
-        limit = parseInt(value, 10);
-      } else if (key === 'offset') {
-        offset = parseInt(value, 10);
-      } else {
-        parseMatchFields(sqlWhereColumns, key, value, fuzzyMatching);
-      }
-    });
-  }
+  searchParams.forEach((value, key) => {
+    if (key === 'includefield') {
+      sqlSelectColumns = parseIncludeFields(sqlSelectColumns, value);
+    } else if (key === 'fuzzymatching') {
+      return true;
+    } else if (key === 'limit') {
+      limit = parseInt(value, 10);
+    } else if (key === 'offset') {
+      offset = parseInt(value, 10);
+    } else {
+      parseMatchFields(sqlWhereColumns, key, value, fuzzyMatching);
+    }
+  });
 
   if (sqlSelectColumns.length === 0) {
     sqlSelectColumns = ['*'];

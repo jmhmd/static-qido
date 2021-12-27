@@ -1,6 +1,11 @@
 import qidoToSQL from './qido-to-sql.js';
 import sendQuery from './send-query.js';
 
+const regexes = {
+  studyLevelReq: /(?:\/studies|^studies)(?:\?|$)/,
+  seriesLevelReq: /(?:\/studies|^studies)\/.+\/series(?:\?|$)/,
+};
+
 /** @type {HTMLInputElement | null} */
 const qidoInputEl = document.querySelector('#qido-input');
 
@@ -18,14 +23,46 @@ async function handleQuerySubmit(/** @type Event */ event) {
     throw new Error('Must include QIDO url parameters');
   }
 
-  const { statement, params } = await qidoToSQL(urlFragment);
+  const url = new URL(urlFragment, window.location.origin);
 
-  console.log(statement, params);
+  const isStudyLevelReq = regexes.studyLevelReq.test(url.pathname);
+  const isSeriesLevelReq = regexes.seriesLevelReq.test(url.pathname);
 
-  const results = await sendQuery(statement, params);
+  // if (!isStudyLevelReq && !isSeriesLevelReq) {
+  //   throw new Error('Only study and series level qido requests are supported');
+  // }
+
+  /** @type {any} */
+  let results;
+  /** @type {string} */
+  let source;
+
+  const startReq = performance.now();
+  if (isStudyLevelReq) {
+    const { statement, params } = await qidoToSQL(url);
+    console.log(statement, params);
+    results = await sendQuery(statement, params);
+    source = 'Static DB';
+  } else {
+    // Pass off to IDC
+    const url = new URL(
+      urlFragment,
+      'https://proxy.imaging.datacommons.cancer.gov/v1/projects/canceridc-data/locations/us/datasets/idc/dicomStores/v5/dicomWeb/'
+    );
+    results = await fetch(url.href, { method: 'GET', headers: { Accept: '*/*' } }).then(
+      (response) => response.json()
+    );
+    source = 'IDC API';
+  }
+  const endReq = performance.now();
 
   if (resultsEl) {
-    resultsEl.innerHTML = JSON.stringify(results, null, 4);
+    resultsEl.innerHTML = `
+    ${results.length} results found.
+    Request time: ${(endReq - startReq).toFixed()} ms
+    Source: ${source}
+    ${JSON.stringify(results, null, 4)}
+    `;
   }
 }
 
