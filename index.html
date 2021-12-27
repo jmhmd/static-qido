@@ -9,6 +9,58 @@
   <body>
     <div id="app">
       <h1>Send QIDO request</h1>
+      <div>
+        Sample queries:
+        <p>
+          <a
+            href="#"
+            onclick="(() => {document.querySelector('#qido-input').value='studies?limit=200&offset=30'})()"
+            >All studies with limit, offset</a
+          >
+        </p>
+        <p>
+          <a
+            href="#"
+            onclick="(() => {document.querySelector('#qido-input').value='studies?includefield=PatientName&PatientName=_&fuzzymatching=true'})()"
+            >Only include patient name</a
+          >
+        </p>
+        <p>
+          <a
+            href="#"
+            onclick="(() => {document.querySelector('#qido-input').value='studies?PatientName=ACRIN&fuzzymatching=true'})()"
+            >Fuzzy match patient name</a
+          >
+        </p>
+        <p>
+          <a
+            href="#"
+            onclick="(() => {document.querySelector('#qido-input').value='studies?limit=10000&PatientName=ACRIN&fuzzymatching=true'})()"
+            >Fuzzy match patient name with large result limit</a
+          >
+        </p>
+        <p>
+          <a
+            href="#"
+            onclick="(() => {document.querySelector('#qido-input').value='studies?StudyDate=20010215-20010217'})()"
+            >Date Range</a
+          >
+        </p>
+        <p>
+          <a
+            href="#"
+            onclick="(() => {document.querySelector('#qido-input').value='studies/1.3.6.1.4.1.14519.5.2.1.2744.7002.589003109913841523480053440701/series'})()"
+            >Series QIDO request</a
+          >
+        </p>
+        <p>
+          <a
+            href="#"
+            onclick="(() => {document.querySelector('#qido-input').value='studies/1.3.6.1.4.1.14519.5.2.1.2744.7002.589003109913841523480053440701/series/1.3.6.1.4.1.14519.5.2.1.2744.7002.335689072261600011273944971796/metadata'})()"
+            >WADO metadata request</a
+          >
+        </p>
+      </div>
       <form id="query-form">
         QIDO/<input
           type="text"

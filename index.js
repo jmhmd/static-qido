@@ -38,6 +38,7 @@ async function handleQuerySubmit(/** @type Event */ event) {
   let source;
 
   const startReq = performance.now();
+  console.time('request')
   if (isStudyLevelReq) {
     const { statement, params } = await qidoToSQL(url);
     console.log(statement, params);
@@ -55,7 +56,9 @@ async function handleQuerySubmit(/** @type Event */ event) {
     source = 'IDC API';
   }
   const endReq = performance.now();
+  console.timeEnd('request')
 
+  console.time('render')
   if (resultsEl) {
     resultsEl.innerHTML = `
     ${results.length} results found.
@@ -64,6 +67,7 @@ async function handleQuerySubmit(/** @type Event */ event) {
     ${JSON.stringify(results, null, 4)}
     `;
   }
+  console.timeEnd('render')
 }
 
 async function main() {
