@@ -178,12 +178,15 @@ export default function qidoToSQL(urlFragment) {
   let sqlParams = [];
 
   const { searchParams } = url;
+  // Define fuzzymatching before looping through params as this value affects how others parsed.
   const fuzzyMatching = searchParams.get('fuzzymatching') === 'true';
 
   if (isStudyLevelReq) {
     searchParams.forEach((value, key) => {
       if (key === 'includefield') {
         sqlSelectColumns = parseIncludeFields(sqlSelectColumns, value);
+      } else if (key === 'fuzzymatching') {
+        return true;
       } else if (key === 'limit') {
         limit = parseInt(value, 10);
       } else if (key === 'offset') {
