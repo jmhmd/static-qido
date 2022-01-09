@@ -12,11 +12,8 @@
   "author": "Jason Hostetter",
   "license": "MIT",
   "dependencies": {
-    "better-sqlite3": "^7.4.5",
     "dcmjs": "^0.19.1",
     "dicomp10-to-dicomweb": "^0.3.0",
-    "got": "^11.8.3",
-    "p-map": "^5.3.0",
     "sql.js-httpvfs": "^0.8.11"
   },
   "devDependencies": {

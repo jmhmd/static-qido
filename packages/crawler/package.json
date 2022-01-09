@@ -1,0 +1,23 @@
+{
+  "name": "static-qido-crawler",
+  "version": "1.0.0",
+  "description": "Generate a static db from a QIDO endpoint",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": "Jason Hostetter",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^7.4.5",
+    "got": "^11.8.3",
+    "p-map": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.4.1",
+    "typescript": "^4.5.2"
+  }
+}
