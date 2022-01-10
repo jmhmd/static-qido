@@ -8,4 +8,7 @@ export interface CrawlOptions {
   match?: {attributeID: string; value: string;}[];
   concurrency: number;
   dbFilePath: string;
+  outputPath: string;
+  downloadInstances: boolean;
+  overwrite: boolean;
 }

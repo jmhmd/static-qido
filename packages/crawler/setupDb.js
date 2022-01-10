@@ -13,13 +13,17 @@ export default function setupDb(path) {
     CREATE TABLE IF NOT EXISTS studies (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       study_instance_uid TEXT,
+      study_id TEXT,
       study_date INTEGER,
+      study_time INTEGER,
       accession_number TEXT,
       patient_name TEXT,
       patient_id TEXT,
       patient_birth_date INTEGER,
       modality TEXT,
-      body_part_examined TEXT
+      modalities_in_study TEXT,
+      body_part_examined TEXT,
+      referring_physician_name TEXT
     );
     `
   ).run();

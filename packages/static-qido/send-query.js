@@ -1,6 +1,6 @@
 import { createDbWorker } from 'sql.js-httpvfs';
 // @ts-ignore
-import dbUrl from './crawler/db.sqlite?url';
+import dbUrl from '../crawler/db.sqlite?url';
 // @ts-ignore
 import workerUrl from 'sql.js-httpvfs/dist/sqlite.worker.js?url';
 // @ts-ignore
@@ -11,13 +11,14 @@ import wasmUrl from 'sql.js-httpvfs/dist/sql-wasm.wasm?url';
  */
 let httpvfsWorker;
 
-/** @type {import("sql.js-httpvfs/dist/sqlite.worker").SplitFileConfigPure} */
+/** @type {import("sql.js-httpvfs/dist/sqlite.worker").SplitFileConfig} */
 const config = {
   from: 'inline',
   config: {
     serverMode: 'full', // file is just a plain old full sqlite database
     requestChunkSize: 4096, // the page size of the sqlite database (by default 4096)
     url: dbUrl, // url to the database (relative or full)
+    databaseLengthBytes: 18755584,
   },
 };
 
