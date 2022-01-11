@@ -18,7 +18,7 @@ const config = {
     serverMode: 'full', // file is just a plain old full sqlite database
     requestChunkSize: 4096, // the page size of the sqlite database (by default 4096)
     url: dbUrl, // url to the database (relative or full)
-    databaseLengthBytes: 32768,
+    // databaseLengthBytes: 32768,
   },
 };
 

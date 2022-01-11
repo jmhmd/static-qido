@@ -1,7 +1,3 @@
-# Static QIDO
-
-A *very* rough work in progress to show feasibility of static QIDO-RS using sqlite and [https://github.com/phiresky/sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs)
-
 #### Notes
 
 https://proxy.imaging.datacommons.cancer.gov/v1/projects/canceridc-data/locations/us/datasets/idc/dicomStores/v5/dicomWeb/studies?limit=101&offset=0&fuzzymatching=true&includefield=00081030%2C00080060
